@@ -2,6 +2,7 @@
 
 import os
 import logging
+import random
 
 import numpy as np
 import tensorflow as tf
@@ -43,6 +44,7 @@ def train(data: str, epochs: int, batch_size: int, vocab_max_size: int,
         for epoch in range(1, epochs + 1):
             total_loss = 0.0
             total_iter = 0
+            random.shuffle(raw_data)
             for x, y in reader.iterate(raw_data, batch_size, NUM_STEPS):
                 l, _, s = session.run([loss, train_step, summary],
                                       feed_dict={inputs: x, targets: y})
